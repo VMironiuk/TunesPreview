@@ -37,4 +37,11 @@ class RemoteTrackListLoaderTests: XCTestCase {
         let _ = RemoteTrackListLoader(httpClient: httpClient)
         XCTAssertNil(httpClient.requestedURL)
     }
+    
+    func test_load_requestsDataFromURL() {
+        let httpClient = HTTPClientSpy()
+        let sut = RemoteTrackListLoader(httpClient: httpClient)
+        sut.load()
+        XCTAssertNotNil(httpClient.requestedURL)
+    }
 }
