@@ -27,14 +27,20 @@ protocol HTTPClient {
 
 class RemoteTrackListLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
+        // given
         let (_, httpClient) = makeSUT()
+        // when
+        // then
         XCTAssertNil(httpClient.requestedURL)
     }
     
     func test_load_requestsDataFromURL() {
+        // given
         let url = URL(string: "http://a-url.com")!
         let (sut, httpClient) = makeSUT(url: url)
+        // when
         sut.load()
+        // then
         XCTAssertEqual(httpClient.requestedURL, url)
     }
     
