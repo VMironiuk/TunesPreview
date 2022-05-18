@@ -9,13 +9,15 @@ import XCTest
 
 final class RemoteTrackListLoader {
     private let httpClient: HTTPClient
+    private let url: URL
     
-    init(httpClient: HTTPClient) {
+    init(httpClient: HTTPClient, url: URL) {
         self.httpClient = httpClient
+        self.url = url
     }
     
     func load() {
-        httpClient.get(from: URL(string: "http://a-url.com")!)
+        httpClient.get(from: url)
     }
 }
 
@@ -34,13 +36,13 @@ class HTTPClientSpy: HTTPClient {
 class RemoteTrackListLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let httpClient = HTTPClientSpy()
-        let _ = RemoteTrackListLoader(httpClient: httpClient)
+        let _ = RemoteTrackListLoader(httpClient: httpClient, url: URL(string: "http://a-url.com")!)
         XCTAssertNil(httpClient.requestedURL)
     }
     
     func test_load_requestsDataFromURL() {
         let httpClient = HTTPClientSpy()
-        let sut = RemoteTrackListLoader(httpClient: httpClient)
+        let sut = RemoteTrackListLoader(httpClient: httpClient, url: URL(string: "http://a-url.com")!)
         sut.load()
         XCTAssertNotNil(httpClient.requestedURL)
     }
