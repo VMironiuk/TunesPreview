@@ -40,9 +40,10 @@ class RemoteTrackListLoaderTests: XCTestCase {
     }
     
     func test_load_requestsDataFromURL() {
-        let (sut, httpClient) = makeSUT()
+        let url = URL(string: "http://a-url.com")!
+        let (sut, httpClient) = makeSUT(url: url)
         sut.load()
-        XCTAssertNotNil(httpClient.requestedURL)
+        XCTAssertEqual(httpClient.requestedURL, url)
     }
     
     // MARK: - Helpers
